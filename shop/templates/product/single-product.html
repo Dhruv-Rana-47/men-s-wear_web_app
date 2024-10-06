@@ -1,0 +1,144 @@
+{%extends 'index.html' %}
+{% block bodycontent %}
+
+<!-- ***** Header Area End ***** -->
+
+<!-- ***** Main Banner Area Start ***** -->
+<div class="page-heading" id="top">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="inner-content">
+                    <h2>"Style that Speaks : Men's Monologue"</h2>
+                    <span>Experience premium material that not only looks and feels luxurious but also stands the test
+                        of time.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ***** Main Banner Area End ***** -->
+
+
+<!-- ***** Product Area Starts ***** -->
+<section class="section" id="product">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="left-images">
+                    {% set full_path = pro.image1 %}
+                    {% set filename1 = full_path.split("/")[-1] %}
+                    {% set full_path = pro.image2 %}
+                    {% set filename2 = full_path.split("/")[-1] %}
+                    <img class="im" src="{{ url_for('static', filename='assets/images/' + filename1) }}"
+                        alt="Frontimage">
+                    <img class="im" src="{{ url_for('static', filename='assets/images/' + filename2) }}"
+                        alt="backimage">
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="right-content">
+                    <h4>{{pro.description}}</h4>
+                    <span class="price"><b>{{pro.price}}₹</b></span>
+                    <div class="free-shipping-label">Free Shipping</div>
+
+                    <ul class="stars">
+
+                    </ul>
+                    <span>
+                        <br>
+                        DESIGN OF THE WEEK
+                        <br>
+                        {{pro.material}}</span>
+                    <br>
+                    <!-- <div class="size-options">
+                        <h6>Select Size : </h6><br>
+                        <select class="form-control">
+                            <option value="small">L</option>
+                            <option value="medium">XL</option>
+                            <option value="large">XXL</option>
+                            
+                        </select>
+                    </div> -->
+                    <br>
+                    <br>
+                    <!-- <div class="color-options">
+                        <label for="color-red" class="color-option red">
+                            <input type="radio" id="color-red" name="color" value="red">
+                        </label>
+
+                        <label for="color-blue" class="color-option blue">
+                            <input type="radio" id="color-blue" name="color" value="blue">
+                        </label>
+
+                        <label for="color-green" class="color-option green">
+                            <input type="radio" id="color-green" name="color" value="green">
+                        </label>
+                    </div> -->
+                    <br>
+                    <table class="data table additional-attributes" id="product-attribute-specs-table">
+
+                        <tbody>
+                            <tr>
+                                <th class="col label" scope="row">Material</th>
+                                <td class="col data" data-th="Material">{{pro.material}}</td>
+                            </tr>
+                            <tr>
+                                <th class="col label" scope="row">Sleeve</th>
+
+                                <td class="col data" data-th="Sleeve"> {% if pro.sleeves %}
+                                    {{pro.sleeves}}
+                                    {% else %}
+                                    <b>NA </b>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="col label" scope="row">Neck</th>
+                                <td class="col data" data-th="Neck">{% if pro.neck %}
+                                    {{pro.neck}}
+                                    {% else %}
+                                    <b>NA </b>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="quantity-content">
+                        <div class="left-content">
+                            <h6>Quantity:</h6>
+                        </div>
+                        <form action="/addcart/{{pro.pid}}" method="post">
+                            <div class="right-content">
+                                <div class="quantity buttons_added">
+                                    <input type="button" value="-" class="minus">
+                                    <input type="number" step="1" min="1" max="{{ pro.stock }}" name="quantity" value="1" title="Qty"
+                                        class="input-text qty text" size="4" pattern="" inputmode="">
+                                    <input type="button" value="+" class="plus">
+                                </div>
+                            </div>
+                    </div>
+                    <div class="total">
+                        <h4>Total: {{pro.price}}₹</h4>
+                        &nbsp;
+                        
+                        <button type="submit" class="main-border-button btn-primary">Add To Cart</button>
+                        <!-- <input type="submit" class="" formaction="/addcart/{{pro.pid}}"> -->
+                        <!-- <div class="main-border-button"><a href="/addcart/{{pro.pid}}"></a></div> -->
+                    </div>
+                    </form>
+                    <br>
+                    <br>
+                    <center>
+                        <div class="exchange-label">10 DAYS Exchange Guarantee</div>
+                    </center>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+<!-- ***** Product Area Ends ***** -->
+{% endblock %}

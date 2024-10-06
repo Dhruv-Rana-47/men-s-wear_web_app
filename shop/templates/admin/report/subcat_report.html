@@ -1,0 +1,161 @@
+
+{% extends 'admin/layout.html' %}    
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Report</title>
+    <style>
+        .report-body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .report-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: black;
+            overflow-x: auto; /* Allow horizontal scrolling for the table */
+        }
+        .report-title {
+            text-align: center;
+        }
+        .report-form {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .report-label {
+            font-weight: bold;
+            margin-right: 10px;
+            color: black;
+        }
+        .report-input {
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .report-submit-btn {
+            padding: 8px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .report-submit-btn:hover {
+            background-color: #0056b3;
+        }
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .report-table th, .report-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            color: black;
+        }
+        .report-table th {
+            background-color: #f2f2f2;
+        }
+        .report-table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .report-total {
+            margin-top: 20px;
+            text-align: right;
+        }
+        .report-total-label {
+            font-weight: bold;
+        }
+        .filter-container {
+            display: none;
+        }
+    </style>
+</head>
+<body class="report-body">
+    <div class="report-container">
+        <h1 class="report-title">Sales Report</h1>
+        <form id="report-form" class="report-form" method="POST" action="/cat_report" onsubmit="return submitReportForm()">
+            <label class="report-label" for="report-start-date">Start Date:</label>
+            <input class="report-input" type="date" id="report-start-date" name="start_date" required>
+            <label class="report-label" for="report-end-date">End Date:</label>
+            <input class="report-input" type="date" id="report-end-date" name="end_date" required>
+            <label class="report-label" for="category-filter">Category:</label>
+            <select id="category-filter" name="category-filter">
+                <option value="">Select</option>
+                
+                {% for cat in cat %}
+                <option value="{{ cat.cid }}">{{ cat.cname }}</option>
+                {% endfor %}
+            </select><br><br>
+            <button class="report-submit-btn" type="submit">Generate Report</button>
+            <!-- <button class="add-filter-btn" type="button">Add Filter</button> -->
+        </form>
+        <form id="pdf-form" method="POST" action="/gen_pdf">
+            <input type="date" name="start_date" id="pdf-start-date" value="" class="d-none">
+            <input type="date" name="end_date" id="pdf-end-date" value="" class="d-none">
+            
+            <button class="btn btn-info" type="button" onclick="submitPdfForm()" >Print</button>
+        </form>
+      
+        
+
+        <!-- Table to display the sales report -->
+        <table class="report-table table-sm">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                    <th>Customer Name</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                    <th>Shipping Address</th>
+                    <th>Payment Type</th>
+                    <th>Telephone</th>
+                    <th>Number of Items</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if sales_report %}
+                {% for order in sales_report %}
+                    <tr>
+                        <td>{{ order['Order ID'] }}</td>
+                        <td>{{ order['Order Date'] }}</td>
+                        <td>{{ order['Customer Name'] }}</td>
+                        <td>{{ order['Total Amount'] }}</td>
+                        <td>{{ order['Status'] }}</td>
+                        <td>{{ order['Shipping Address'] }}</td>
+                        <td>{{ order['Payment Type'] }}</td>
+                        <td>{{ order['Telephone'] }}</td>
+                        <td>{{ order['Number of Items'] }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="9">No data available</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+
+        <!-- Total Sales section -->
+        <div class="report-total">
+            <span class="report-total-label">Total Sales:&nbsp;{{total_sales}}<b>₹</b></span>
+            <span class="report-total-amount"> <!-- Total sales amount will be displayed here --> </span>
+        </div>
+    </div>
+<!-- here i had mentioned javascript function for setting value for gen_pdf route variable which is now in layout.html -->
+</body>
+</html>
+{% endblock  %}

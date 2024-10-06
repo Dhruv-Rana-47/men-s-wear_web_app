@@ -1,0 +1,57 @@
+
+{% extends 'index.html' %}
+
+
+{% block bodycontent %}
+
+
+<div class="container-grp">
+
+    <div class="form-container-profile">
+        <form action="/submit_profile" class="profile-form" method="post" enctype="multipart/form-data" >
+    <div class="profile-photo">
+       
+
+
+        <img id="preview" src="{{url_for('static',filename='assets/images/men-user.png')}}" alt="Profile Picture">
+        <input type="file" id="profile_photo" name="profile_photo" class="profile-photo-input" accept="image/*" onchange="previewImage(event)">
+        <label for="profile_photo" class="profile-photo-label">Upload Profile Photo</label>
+    </div>
+            <div class="form-group-prf">
+                <label for="username" class="prf-lb">Username</label>
+                <input type="text" class="prf-inp" id="username" name="username" value="{{user.name}}" required>
+            </div>
+            <div class="form-group-prf">
+                <label for="email" class="prf-lb">Email</label>
+                <input type="email" class="prf-inp" id="email" name="email" value="{{user.email}}"required>
+            </div>
+            <div class="form-group-prf">
+                <label for="address" class="prf-lb">Address</label>
+                <textarea id="address" class="prf-inp" name="address" rows="3" value="{{profile.address}}" ></textarea>
+            </div>
+            <div class="form-group-prf">
+                <label for="dob" class="prf-lb">Date of Birth</label>
+                <input type="date" id="dob" class="prf-inp" value="{{profile.date_of_birth}}" name="dob" >
+            </div>
+            <div class="form-group-prf">
+                <label for="age" class="prf-lb">Age</label>
+                <input type="number" id="age" class="prf-inp" value="{{profile.age}}" name="age" >
+            </div>
+            <div class="form-group-prf">
+                <label for="gender" class="prf-lb">Gender</label>
+                <select id="gender" class="prf-inp" name="gender" >
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <button type="submit" class="submit-btn-profile w-25" >Submit</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+{% endblock  %}
+

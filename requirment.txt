@@ -1,0 +1,126 @@
+----------------- -------
+alembic           1.13.1
+bcrypt            4.1.2
+blinker           1.7.0
+click             8.1.7
+colorama          0.4.6
+Flask             3.0.2
+Flask-Admin       1.6.1
+Flask-Bcrypt      1.0.1
+Flask-Login       0.6.3
+Flask-Mail        0.9.1
+Flask-Migrate     4.0.5
+Flask-MySQLdb     2.0.0
+Flask-SQLAlchemy  3.1.1
+Flask-Uploads     0.2.1
+Flask-WTF         1.2.1
+greenlet          3.0.3
+itsdangerous      2.1.2
+Jinja2            3.1.3
+Mako              1.3.2
+MarkupSafe        2.1.5
+mysql             0.0.3
+mysqlclient       2.2.1
+pip               24.0
+setuptools        65.5.0
+SQLAlchemy        2.0.25
+typing_extensions 4.9.0
+Werkzeug          3.0.1
+WTForms           3.1.2
+{% if not order %}
+            <hr>
+            <h2 >No order placed Yet!</h2>
+          <hr>
+          {%else%}
+
+@web.route('/report', methods=['GET', 'POST'])
+@login_required
+def report():
+    if current_user.id == 1 and current_user.is_authenticated:
+        if request.method == 'POST':
+            
+            # Get start and end date from request arguments
+            start_date_str = request.form.get('start_date')
+            end_date_str = request.form.get('end_date')
+            category_id = request.form.get('category-filter')  
+            if start_date_str:
+                start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
+                return f'Start Date: {start_date}'
+            else:
+                return 'Error: Start date is missing or inval'
+            # Convert start and end date strings to datetime objects
+            # start_date = datetime.strptime(start_date_str, '%Y-%m-%d')
+            end_date = datetime.strptime(end_date_str, '%Y-%m-%d')
+            
+
+            if category_id:
+
+                # Query orders within the specified date range and category
+                orders_within_range = db.session.query(Order).\
+                    join(OrderDetail, Order.ord_id == OrderDetail.ord_id).\
+                    filter(Order.ord_date.between(start_date, end_date)).\
+                    filter(OrderDetail.product.has(category_id=category_id)).all()
+            else:
+                # Query orders within the specified date range only
+                orders_within_range = db.session.query(Order).\
+                    filter(Order.ord_date.between(start_date, end_date)).all()
+
+            # Query orders within the specified date range
+           
+
+            # Initialize dictionary to store order details
+            sales_report = []
+
+            # Iterate over orders
+            for order in orders_within_range:
+                order_details = {
+                    'Order ID': order.ord_id,
+                    'Order Date': order.ord_date,
+                    'Customer Name': order.cus_name,
+                    'Total Amount': 0,  # Initialize total amount for the order
+                    'Status': order.status,
+                    'Shipping Address': order.shipping_address,
+                    'Payment Type': order.payment_type,
+                    'Telephone': order.telephone,
+                    'Number of Items': 0  # Initialize total number of items for the order
+                }
+
+                # Iterate over order details to calculate total amount and number of items
+                for order_detail in order.order_details:
+                    product = order_detail.product
+                    product_total = order_detail.quantity * product.price
+                    order_details['Total Amount'] += product_total
+                    order_details['Number of Items'] += order_detail.quantity
+
+                    # Add product details to the order details
+                    order_details[f'Product {product.pid}'] = {
+                        'Product Name': product.pname,
+                        'Quantity': order_detail.quantity,
+                        'Price Per Unit': product.price,
+                        'Total Price': product_total
+                    }
+
+                # Add order details to the sales report
+                sales_report.append(order_details)
+
+            # Calculate total sales within the specified date range
+            total_sales = db.session.query(func.sum(OrderDetail.quantity * Product.price)).\
+                join(OrderDetail.product).\
+                join(Order).\
+                filter(Order.ord_date.between(start_date, end_date)).\
+                filter(OrderDetail.product.has(category_id=category_id)).scalar()
+
+            # Return JSON response if the request was made via AJAX
+            if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+                return jsonify({'sales_report': sales_report, 'total_sales': total_sales})
+            # Render the sales report template with the retrieved data if it's a regular form submission
+            else:
+                return render_template('admin/report/sale_report.html', sales_report=sales_report, total_sales=total_sales)
+        else:
+            # If the request method is not POST, render the page without data
+            return render_template('admin/report/sale_report.html', sales_report=None, total_sales=None)
+    else:
+        return redirect(url_for('unauthorized'))
+
+
+

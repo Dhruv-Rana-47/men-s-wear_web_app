@@ -1,0 +1,292 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+
+    <title>Men's Monologue</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/font-awesome.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/templatemo-hexashop.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/owl-carousel.css') }}">
+
+    <link rel="stylesheet" href=" {{ url_for('static', filename='assets/css/lightbox.css') }}">
+
+    <link rel="stylesheet" href=" {{ url_for('static', filename='assets/css/profile.css') }}">
+
+    <link rel="stylesheet" href=" {{ url_for('static', filename='assets/css/order.css') }}">
+   
+</head>
+
+<body onload="setMaxDate()">
+
+
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <header class="header-area header-sticky">
+        <div class="container">
+            <img src="   {{ url_for('static', filename='assets/images/zzz-removebg-preview.png') }} " class="hello">
+            <div class="row">
+                <div class="col-12">
+                    <nav class="main-nav">
+
+                        <a href="/" class="logo">
+
+                            <!--<img src="assets/images/logo.png">-->
+                        </a>
+
+
+
+                        <ul class="nav">
+
+                            <li class="scroll-to-section"><a href="/" class="submenu">Home</a></li>
+                            <li class="scroll-to-section"><a href="/cart" class="submenu">Cart</a>
+                            </li>
+
+                            <li class="submenu">
+                                <a href="javascript:;">Category</a>
+                                <ul>
+                                    {% for category in categories %}
+                                    <li class="scroll-to-section"><a
+                                            href="/sub_cat/{{category.cid}}">{{category.cname}}</a></li>
+
+                                    {%endfor %}
+                                </ul>
+                            </li>
+
+                            <li class="submenu">
+                                <a href="javascript:;">Pages</a>
+                                <ul>
+                                  
+                                 
+                                    <li><a href="/contact">Contact Us</a></li>
+                                </ul>
+                            </li>
+
+
+                            <li class="submenu">
+                                <!--menu [rana]-->
+                                <a href="javascript:;">Account</a>
+                                <ul>
+                                    {% if current_user.is_authenticated %}
+                                    <li><a href="/profile">Profile</a></li>
+                                    <li><a href="/orders">Orders</a></li>
+                                    <li><a href="/logout">Log Out</a></li>
+                                    
+
+                                    {% else %}
+                                    <li><a href="/register">Register</a></li>
+
+                                    <li><a href="/login">Login</a></li>
+
+
+                                    {% endif %}
+                                    {% if current_user.id==1 and current_user.is_authenticated %}
+
+                                    <li><a href="/myadmin">Admin</a></li>
+                                    {% endif %}
+                                </ul>
+                            </li>
+
+                        </ul>
+                        <a class='menu-trigger'>
+                            <span>Menu</span>
+                        </a>
+                        </li>
+
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    {% block bodycontent %}
+
+    {% endblock bodycontent %}
+
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+
+                </div>
+                <div class="col-lg-3">
+                    <h4>Shopping &amp; Categories</h4>
+                    <ul>
+                        {% for category in categories %}
+                        <li><a href="/sub_cat/{{category.cid}}">{{category.cname}}</a></li>
+                        {%endfor %}
+                       
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <h4>Useful Links</h4>
+                    <ul>
+                        <li><a href="/">Homepage</a></li>
+                       
+                        <li><a href="/contact">Contact Us</a></li>
+                    </ul>
+                </div>
+           
+                <div class="col-lg-12">
+                    <div class="under-footer">
+                        <p>Copyright © All Rights Reserved.
+
+                           <ul>
+                            <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                            <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="{{ url_for('static', filename='assets/js/jquery-2.1.0.min.js') }}"></script>
+
+    <!-- Bootstrap -->
+
+    <script src="  {{ url_for('static', filename='assets/js/popper.js') }}"></script>
+    <script src="  {{ url_for('static', filename='assets/js/bootstrap.min.js') }}"></script>
+
+    <!-- Plugins -->
+    <script src="  {{ url_for('static', filename='assets/js/owl-carousel.js') }}"></script>
+    <script src="  {{ url_for('static', filename='assets/js/accordions.js') }}"></script>
+    <script src="  {{ url_for('static', filename='assets/js/datepicker.js') }}"></script>
+    <script src="  {{ url_for('static', filename='assets/js/scrollreveal.min.js') }}"></script>
+    <script src="  {{ url_for('static', filename='assets/js/waypoints.min.js') }}"></script>
+    <script src="  {{ url_for('static', filename='assets/js/jquery.counterup.min.js') }}"></script>
+    <script src="  {{ url_for('static', filename='assets/js/imgfix.min.js') }}"></script>
+    <script src="  {{ url_for('static', filename='assets/js/slick.js') }}"></script>
+    <script src="  {{ url_for('static', filename='assets/js/lightbox.js') }}"></script>
+    <script src="  {{ url_for('static', filename='assets/js/isotope.js') }}"></script>
+    <script src=" {{ url_for('static', filename='assets/js/quantity.js') }}"></script>
+
+    <!-- Global Init -->
+
+    <script src="{{ url_for('static', filename='assets/js/custom.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/bootstrap-bundle.min.js') }}"></script>
+    
+    <script>
+
+        $(function () {
+            var selectedClass = "";
+            $("p").click(function () {
+                selectedClass = $(this).attr("data-rel");
+                $("#portfolio").fadeTo(50, 0.1);
+                $("#portfolio div").not("." + selectedClass).fadeOut();
+                setTimeout(function () {
+                    $("." + selectedClass).fadeIn();
+                    $("#portfolio").fadeTo(50, 1);
+                }, 500);
+
+            });
+        });
+        // profile page js->
+        function previewImage(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function () {
+                var img = document.getElementById('preview');
+                img.src = reader.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+        function setMaxDate() {
+            var currentDate = new Date();
+            var maxYear = currentDate.getFullYear() - 18;
+            var maxMonth = currentDate.getMonth() + 1; // Adding 1 since getMonth() returns zero-based month index
+            var maxDay = currentDate.getDate();
+            
+            // Format the date as required by the input type date (YYYY-MM-DD)
+            var maxDateString = maxYear + '-' + (maxMonth < 10 ? '0' : '') + maxMonth + '-' + (maxDay < 10 ? '0' : '') + maxDay;
+            document.getElementById("dob").setAttribute("max", maxDateString);
+        }
+
+        function dismissFlashMessage(button) {
+                        button.parentNode.style.display = 'none';
+                    }
+
+                    $(function() {
+            var selectedClass = "";
+            $("p").click(function(){
+            selectedClass = $(this).attr("data-rel");
+            $("#portfolio").fadeTo(50, 0.1);
+                $("#portfolio div").not("."+selectedClass).fadeOut();
+            setTimeout(function() {
+              $("."+selectedClass).fadeIn();
+              $("#portfolio").fadeTo(50, 1);
+            }, 500);
+                
+            });
+        });
+
+// cart page ajax quantity updating 
+function updateQuantity(cartId, amount) {
+        var quantityInput = document.getElementById('quantity-' + cartId);
+        var maxQuantity = parseInt(quantityInput.getAttribute('max')); // Get the max quantity from the input field
+        var newQuantity = parseInt(quantityInput.value) + amount;
+        if (newQuantity >= 1 && newQuantity <= maxQuantity) {
+            quantityInput.value = newQuantity;
+            // Update the quantity on the server using AJAX
+            updateCartQuantity(cartId, newQuantity);
+        }
+    }
+
+
+    function updateCartQuantity(cartId, newQuantity) {
+        // Send an AJAX request to update the cart quantity
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/update_cart_quantity/' + cartId, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var quantityInput = document.getElementById('quantity-' + cartId);
+            var unitPriceElement = document.getElementById('unit-price-' + cartId);
+            var totalPriceElement = document.getElementById('total-price-' + cartId);
+            var totalBillAmountElement = document.getElementById('total-bill-amount');
+            
+            var unitPrice = parseFloat(unitPriceElement.innerText.replace('₹', '')); // Extract unit price value
+            var newQuantityValue = parseInt(quantityInput.value);
+            var newTotalPrice = unitPrice * newQuantityValue;
+            
+            quantityInput.value = newQuantityValue; // Update the quantity input field
+            totalPriceElement.innerText = newTotalPrice.toFixed(2) + '₹'; 
+               
+            var totalPriceElements = document.querySelectorAll('.total-price'); // Select all total price elements
+            var totalBillAmount = 0;
+            totalPriceElements.forEach(function(element) {
+                totalBillAmount += parseFloat(element.innerText);
+            });
+            totalBillAmountElement.innerText = totalBillAmount.toFixed(2);
+                // Cart quantity updated successfully
+                
+            } else {
+                // Error handling
+                console.error('Failed to update cart quantity:', xhr.responseText);
+                alert('Failed to update cart quantity. Please try again.'); // Display an error message to the user
+            }
+        };
+        xhr.send(JSON.stringify({ quantity: newQuantity }));
+    }
+    </script>
+
+</body>
+
+</html>

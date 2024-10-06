@@ -1,0 +1,94 @@
+{% extends 'admin/layout.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2>Add Product</h2>
+    <form action="/addpro" method="post" id="add-product-form"  enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="pname">Product Name:</label>
+            <input type="text" class="form-control w-50" id="pname" name="pname" required>
+        </div>
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <select class="form-control w-50" id="category" name="cid" required>
+                <!-- Populate dropdown with categories corresponding to selected subcategory -->
+                <option value="">Select</option>
+                
+                {% for cat in cat %}
+                <option value="{{ cat.cid }}">{{ cat.cname }}</option>
+                {% endfor %}
+                <!-- JavaScript will populate this dropdown based on the selected subcategory -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="sub_id">Subcategory:</label>
+            <select class="form-control w-50" id="sub_id" name="sub_id" required>
+                <!-- Populate dropdown with existing subcategories -->
+                <option value="">Select</option>
+                {% for subcategory in subcat %}
+                <option value="{{ subcategory.sub_id }}">{{ subcategory.sub_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+       
+       
+        <div class="form-group">
+            <label for="desc">Description:</label>
+            <textarea class="form-control w-50" id="desc" name="desc" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+            <label for="price">Price:</label>
+            <input type="number" class="form-control w-50" id="price" name="price" required>
+        </div>
+       
+        <div class="form-group">
+            <label for="material">Material:</label>
+            <input type="text" class="form-control w-50" id="material" name="material" >
+        </div>
+        <div class="form-group">
+            <label for="sleeves">Sleeves:</label>
+            <input type="text" class="form-control w-50" id="sleeves" name="sleeves" >
+        </div>
+        <div class="form-group">
+            <label for="neck">Neck:</label>
+            <input type="text" class="form-control w-50" id="neck" name="neck" >
+        </div>
+        <div class="form-group">
+            <label for="stock">Stock:</label>
+            <input type="number" class="form-control w-50" id="stock" name="stock" required>
+        </div>
+        <div class="form-group">
+            <label for="img1">Image 1:</label>
+            <input type="file" class="form-control-file" id="img1" name="img1" required>
+        </div>
+        <div class="form-group">
+            <label for="img2">Image 2:</label>
+            <input type="file" class="form-control-file" id="img2" name="img2" required>
+        </div>
+        <div class="form-group">
+            <label for="color">Color:</label>
+            <select class="form-control w-50" id="color" name="color" required>
+                <!-- Populate dropdown with existing colors -->
+                <option value="">Select</option>
+                {% for color in colors %}
+                <option value="{{ color.color_id }}">{{ color.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="size">Size:</label>
+            <select class="form-control w-50" id="size" name="size" required>
+                <!-- Populate dropdown with existing sizes -->
+                <option value="">Select</option>
+                {% for size in sizes %}
+                <option value="{{ size.sid }}">{{ size.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Add Product</button>
+            <a href="/product" class="btn btn-danger">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

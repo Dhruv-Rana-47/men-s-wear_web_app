@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+    <!-- Montserrat Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+   
+    <link rel="stylesheet" href=" {{ url_for('static', filename='assets/css/ad_styles.css') }}">
+  </head>
+  <body>
+    <div class="grid-container">
+
+      <!-- Header -->
+      <header class="header">
+        <div class="menu-icon" onclick="openSidebar()">
+          <span class="material-icons-outlined">menu</span>
+        </div>
+        <div class="header-left">
+          <span class="material-icons-outlined">search</span>
+        </div>
+        <div class="header-right">
+          <span class="material-icons-outlined">notifications</span>
+          <span class="material-icons-outlined">email</span>
+          <span class="material-icons-outlined">account_circle</span>
+        </div>
+      </header>
+      <!-- End Header -->
+
+      <!-- Sidebar -->
+      <aside id="sidebar">
+        <div class="sidebar-title">
+          <div class="sidebar-brand">
+            <span class="material-icons-outlined ">account_box</span> Admin<br>{{ current_user.name }}
+          </div>
+          <span class="material-icons-outlined" onclick="closeSidebar()">close</span>
+        </div>
+
+        <ul class="sidebar-list">
+          <li class="sidebar-list-item sl">
+            <a href="/myadmin">
+              <span class="material-icons-outlined">dashboard</span> Dashboard
+            </a>
+          </li>
+
+
+
+          <li class="treeview tb">
+            <a class="sl" href="#" class="dropdown-toggle" onclick="toggleMenu('tablesDropdown','tablesArrow')">
+                <i class="fa fa-table"></i> <span >Table</span> &nbsp;<i id="tablesArrow" class="fas fa-chevron-down"></i>
+            </a>
+            <ul class="collapse list-unstyled" id="tablesDropdown">
+                <li class="titem"><a href="/category"><i class="material-icons-outlined ml-3 ">category</i> Categories</a></li>
+                <li class="titem"><a href="/subcat"><i class="material-icons-outlined ml-3">category</i>SubCategories</a></li>
+                <li class="titem"><a href="/product" ><i class="material-icons-outlined ml-3">fact_check</i> Products</a></li>
+                <li class="titem"><a href="/color" ><i class="material-icons-outlined ml-3">palette</i> Colors</a></li>
+                <li class="titem"><a href="/size" ><i class="material-icons-outlined ml-3">text_fields</i> Sizes</a></li>
+                <li class="titem"><a href="/order" ><i class="material-icons-outlined ml-3">shopping_cart</i> Orders</a></li>
+                <li class="titem"><a href="/order_detail" ><i class="material-icons-outlined ml-3">list_alt</i> Order Details</a></li>
+                <!-- <li class="titem"><a href="/feedback" ><i class="material-icons-outlined ml-3 ">feedback</i> Feedback</a></li> -->
+                <!-- <li class="titem"><a href="/payment" ><i class="material-icons-outlined ml-3">payment</i> Payment</a></li> -->
+                <li class="titem"><a href="/user" ><i class="material-icons-outlined ml-3 ">person</i> Users</a></li>
+            </ul>
+        </li>
+
+        <li class="treeview tb">
+          <a class="sl" href="#" class="dropdown-toggle" onclick="toggleMenu('reportsdropdown','reportarrow')">
+            <span class="material-icons-outlined">poll</span> <span >Reports</span> &nbsp;<i id="reportarrow" class="fas fa-chevron-down"></i>
+          </a>
+          <ul class="collapse list-unstyled" id="reportsdropdown">
+            <li class="titem"><a href="/report" >Sales Report-date</a></li>
+            <li class="titem"><a href="/cat_report" >Sales Report-category</a></li>
+            
+          </ul>
+
+          
+          <li class="sidebar-list-item sl">
+            <a href="/ch_pwd" >
+              <span class="material-icons-outlined">settings</span>Change password
+            </a>
+          </li>
+                   </ul>
+      </aside>
+    
+      <!-- End Sidebar -->
+      <main class="main-container">
+{% block body %}
+    
+{%endblock  %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.5/apexcharts.min.js"></script>
+<!-- Custom JS -->
+<script src="{{ url_for('static', filename='assets/js/adminscript.js') }}"></script>
+<script>
+function toggleMenu(menuId,arrowid) {
+    var menu = document.getElementById(menuId);
+    menu.classList.toggle('show');
+}
+function toggleMenu(menuId,arrowid) {
+    var menu = document.getElementById(menuId);
+    var arrow = document.getElementById(arrowid);
+    menu.classList.toggle('show');
+    arrow.classList.toggle('rotate-up'); // Rotate arrow when menu is toggled
+}
+// function to set date time forpdf form route of report
+function submitReportForm(storeCategory) {
+    // Get start date and end date from report form
+    var startDate = document.getElementById("report-start-date").value;
+    var endDate = document.getElementById("report-end-date").value;
+    
+    // Store start and end date in local storage
+    localStorage.setItem('start_date', startDate);
+    localStorage.setItem('end_date', endDate);
+
+    // Check if the category should be stored
+    if (storeCategory) {
+        // Get the selected category value from the form
+        var categoryDropdown = document.getElementById("category-filter");
+        var category = categoryDropdown.options[categoryDropdown.selectedIndex].value;
+
+        // Store the category value in local storage
+        localStorage.setItem('category', category);
+    }
+
+    // Return true to allow form submission
+    return true;
+}
+    function submitPdfForm(store) {
+        // Submit the PDF form
+        var startDate = localStorage.getItem('start_date');
+    var endDate = localStorage.getItem('end_date');
+
+    // Set start date and end date values to hidden inputs in the PDF form
+    document.getElementById("pdf-start-date").value = startDate;
+    document.getElementById("pdf-end-date").value = endDate;
+
+    if (store) {
+    var category = localStorage.getItem('category');
+
+    document.getElementById("pdf-cat").value=category;
+    }
+    document.getElementById("pdf-form").submit();
+
+    }
+       
+ 
+</script>
+
+</main>
+<!-- End Main -->
+
+</div>
+    </body>
+</html>

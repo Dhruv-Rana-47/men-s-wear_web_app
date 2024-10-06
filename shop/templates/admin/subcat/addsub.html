@@ -1,0 +1,102 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Subcategory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 20px; /* Changed margin to 20px */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #ccc; /* Changed background color to grey */
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group select,
+        .form-group input[type="text"] {
+            width: calc(100% - 20px); /* Adjusted width to be slightly smaller */
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .form-group button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .form-group button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Add Subcategory</h2>
+        <form action="/addsub" method="post" id="add-subcategory-form">
+            <div class="form-group">
+                <label for="cid">Category:</label>
+                <select id="cid" name="cid" required>
+                   
+                    <option value="">Select</option>
+                    {% for category in categories %}
+                    <option value="{{category.cid}}">{{category.cname}}-{{category.cid}}</option>
+                    {% endfor %}
+                   
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="subname">Subcategory Name:</label>
+                <input type="text" id="subname" name="subname" required>
+            </div>
+            <div class="form-group">
+                <button type="submit">Add Subcategory</button>
+                <a href="/subcat" class="btn btn-danger">cancel</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html> -->
+
+{% extends 'admin/layout.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2>Add Subcategory</h2>
+    <form action="/addsub" method="post" id="add-subcategory-form">
+        <div class="form-group">
+            <label for="cid">Category:</label>
+            <select class="form-control w-50" id="cid" name="cid" required>
+                <!-- Populate dropdown with category IDs -->
+                <option value="">Select</option>
+                {% for category in categories %}
+                <option value="{{category.cid}}">{{category.cname}}-{{category.cid}}</option>
+                {% endfor %}
+                <!-- Add more options as needed -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="subname">Subcategory Name:</label>
+            <input type="text" class="form-control w-50" id="subname" name="subname" required>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Add Subcategory</button>
+            <a href="/subcat" class="btn btn-danger">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <style>
+body {
+    background-color: #333;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    width: 400px;
+    background-color: #666;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.card-header {
+    padding: 20px;
+    background-color: #444;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    text-align: center;
+    color: #fff;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+label {
+    color: #fff;
+    font-weight: bold;
+}
+
+input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #fffcfc;
+    color: #000000;
+    font-weight: bold;
+}
+
+.verify-btn {
+    display: block;
+    width: 40%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #28a745;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.verify-btn:hover {
+    background-color: #218838;
+}
+
+.verify-btn:focus {
+    outline: none;
+}
+
+button {
+    margin-top: 10px;
+}
+</style>
+
+</head>
+
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+
+        <ul  class="alert alert-success flashes ms-3 me-3 w-25 p-3 overflow-auto rounded text-secondary bg-light">
+         {% for category, message in messages %}
+            <li class="{{ category }} "><b>{{ message }}</b></li>
+         {% endfor %}
+         </ul>
+    {% endif %}
+{% endwith %}
+    <div class="container">
+        <!-- OTP form start -->
+        <div class="card">
+            <div class="card-header">
+                <h2>Verify OTP</h2>
+            </div>
+            <div class="card-body">
+                <form action="/verify" method="post">
+                    <label for="otp">Enter OTP:</label>
+                    <input type="text" id="otp" name="otp" required>
+                    <button type="submit" class="verify-btn">Verify</button>
+                </form>
+            </div>
+        </div>
+        <!-- OTP form end -->
+    </div>
+</body>
+
+</html>

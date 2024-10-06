@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/bootstrap.min.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/css/font-awesome.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/templatemo-hexashop.css') }}">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/owl-carousel.css') }}">
+
+    <link rel="stylesheet" href=" {{ url_for('static', filename='assets/css/lightbox.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/style.css') }}">
+    <title>Modern Login Page | AsmrProg</title>
+    <style>
+        .new-otp-container{
+            height: 50px;
+            width: 50px;
+            color: turquoise;
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+<a href="/" class="btn btn-secondary " style="align-self:flex-start;margin-left: 10px; width: 200px;">Home</a>
+
+    
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+
+        <ul  class="alert alert-success flashes ms-3 me-3 w-25 p-3 overflow-auto rounded text-secondary bg-light">
+    
+    {% for category, message in messages %}
+            <li class="{{ category }} "><b>{{ message }}</b></li>
+         {% endfor %}
+         </ul>
+    {% endif %}
+{% endwith %}
+
+    <div class="container" id="container">
+        <!-- registration form start-->
+        <div class="form-container sign-up">
+
+            <form action="/register" method="post">
+                <h1>Create Account</h1>
+                <br>
+                <br>
+                <input type="text" placeholder="Name" name="name" required>
+                <input type="email" placeholder="Email" name="email" required>
+                <input type="password" placeholder="Password" name="psw" required>
+                <button>Sign Up</button>
+            </form>
+    </div>
+        <!-- registration form end -->
+
+        <!-- sign in /log in form start-->
+      
+        <div class="form-container sign-in">
+            <form action="/login" method="post">
+                <h1>Sign In</h1>
+                <br>
+                <br>
+                <input type="email" placeholder="Email"  name="uname" required>
+                <input type="password" placeholder="Password" name="psw" required>
+                <!-- <a href="#">Forget Your Password?</a> -->
+                <button>Sign In</button>
+            </form>
+        </div>
+
+        <!-- sign in /log in form End -->
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Welcome <br>to <br>Men's monologue!</h1>
+                    <p class="text-white">Enter your personal details to use all of site features</p>
+                    <button class="hidden" id="login" name="sigin">Sign In</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Welcome Back<br>to<br> Men's monologue !</h1>
+                    <p class="text-white">Enter your personal details to use all of site features</p>
+                    <button class="hidden" id="register" name="signup">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='assets/js/script.js') }}"></script>
+</body>
+
+</html>
+

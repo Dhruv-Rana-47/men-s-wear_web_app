@@ -1,0 +1,30 @@
+.ord-main-container {
+    background-color: #f2f2f2; /* Light gray */
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Customizing form elements */
+.ord-form-control {
+    border-color: #ccc; /* Light gray border */
+}
+
+/* Styling the button */
+.ord-btn-dark {
+    background-color: #a0cdfa; /* Dark gray */
+    border-color: #94acc5; /* Dark gray border */
+}
+
+.ord-btn-dark:hover {
+    background-color: #c9ddf1; /* Darker gray on hover */
+    border-color: #1a1d21; /* Darker gray border on hover */
+}   
+ .ord-form-check-input {
+    width: 1.3em;
+    height: 1.3em;
+}
+
+.ord-form-check-label {
+    font-size: 1.1em;
+}

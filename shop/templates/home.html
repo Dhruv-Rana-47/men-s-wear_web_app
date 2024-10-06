@@ -1,0 +1,178 @@
+{% extends 'index.html' %} 
+{% block bodycontent %}
+  
+<div class="main-banner" id="top">
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+            <ul class="alert alert-success flashes ms-3 me-3 w-75  overflow-auto">
+                {{ message }}
+                <a href="/neworder" class="btn btn-primary ">view order</a>
+                <button type="button" class="close" onclick="dismissFlashMessage(this)">
+                    <span aria-hidden="true">&times;</span></button></ul>
+   {% endfor %}
+    {% endif %}
+{% endwith %}
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-lg-6">
+              <div class="left-content">
+                  <div class="thumb">
+                      <div class="inner-content">
+                          <h4>We are Men's Monologue</h4>
+                          <span>You don't find style.<br>Style finds you</span>
+                         
+                      </div>
+                      <img src=" {{ url_for('static', filename='assets/images/grp.png') }}" alt="not">
+                  </div>
+              </div>
+          </div>
+          <div class="col-lg-6">
+              <div class="right-content">
+                  <div class="row">
+                      <div class="col-lg-6">
+                          <div class="right-first-image">
+                              <div class="thumb">
+                                  <div class="inner-content">
+                                      <h4>Upper wear</h4>
+                                      <span>Best Upper wear For Men</span>
+                                  </div>
+                                  <div class="hover-content">
+                                      <div class="inner">
+                                          <h4>Upper wear</h4>
+                                          <p>Hoodies <br> T-shirt<br>Shirt</p> 
+                                            
+                                          <div class="main-border-button">
+                                              <a href="/sub_cat/1">Discover More</a>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <img src="{{ url_for('static', filename='assets/images/Image_Editor.png') }}">
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-6">
+                          <div class="right-first-image">
+                              <div class="thumb">
+                                  <div class="inner-content">
+                                      <h4>Bottom wear</h4>
+                                      <span>Best Bottom wear For Men</span>
+                                  </div>
+                                  <div class="hover-content">
+                                      <div class="inner">
+                                          <h4>Bottom wear</h4>
+                                          <p>Cargo pants<br>Jeans pants<br>Chinos pants</p>
+                                          <div class="main-border-button">
+                                              <a href="/sub_cat/2">Discover More</a>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <img src="{{ url_for('static', filename='assets/images/Image_Editor (1).png') }}">
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-6">
+                          <div class="right-first-image">
+                              <div class="thumb">
+                                  <div class="inner-content">
+                                      <h4>Accessories</h4>
+                                      <span>Best Accessories For men</span>
+                                  </div>
+                                  <div class="hover-content">
+                                      <div class="inner">
+                                          <h4>Accessories</h4>
+                                          <p>Sun glasses <br>Caps <br> Belt</p>
+                                          <div class="main-border-button">
+                                              <a href="/sub_cat/3">Discover More</a>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <img src="{{ url_for('static', filename='assets/images/Image_Editor (2).png') }}">
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-lg-6">
+                          <div class="right-first-image">
+                              <div class="thumb">
+                                  <div class="inner-content">
+                                      <h4>Our speacial!!</h4>
+                                      <span>Best of Men's Monologue</span>
+                                  </div>
+                                  <div class="hover-content">
+                                      <div class="inner">
+                                          <h4>Our speacial!!</h4>
+                                          <p>Here! you get our best combinations</p>
+                                          <div class="main-border-button">
+                                              <a href="#">Discover More</a>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <img src="{{ url_for('static', filename='assets/images/Image_Editor (3).png') }}" alt="not you">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<!-- ***** Main Banner Area End ***** -->
+
+<!-- ***** Men Area Starts ***** -->
+{% for category in categories  %}
+    
+<section class="section" id="men">
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-6">
+              <div class="section-heading">
+                  <h2>{{ category.cname }}</h2> 
+                  <span>“Looking good isn't self-importance; it's self-respect.”</span>
+          <a href="/sub_cat/{{category.cid}}" class="btn btn-primary  mb-2">see-all</a>
+        </div>   
+          </div>
+      </div>
+  </div>
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="men-item-carousel">
+                  <div class="owl-men-item owl-carousel">
+                    {% for product in category.products  %}
+                      <div class="item">
+                          <div class="thumb">
+                              <div class="hover-content">
+                                  <ul>
+                                      <li><a href="/one_pro/{{product.pid}}"><i class="fa fa-eye" ></i></a></li>
+                                      <!-- <li><a href="/one_pro/{{product.pid}}"><i class="fa fa-star"></i></a></li> -->
+                                      <li><a href="/addcart/{{product.pid}}"><i class="fa fa-shopping-cart"></i></a></li>
+                                  </ul>
+                              </div>
+                              {% set full_path = product.image1 %}
+                              {% set filename = full_path.split("/")[-1] %}
+      
+                              <img src="{{ url_for('static', filename='assets/images/' + filename) }}" alt="">
+                              <!-- <img src="{{ url_for('static', filename='assets/images/mm3.jpg') }}" alt=""> -->
+                          </div>
+                          <div class="down-content">
+                              <h4><center>{{product.pname}}</center></h4>
+                             
+                           
+                          </div>
+                      </div>
+                      {% endfor %}
+
+                      
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+{% endfor %}
+
+
+
+{% endblock  %}

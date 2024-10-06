@@ -1,0 +1,19 @@
+{% extends 'admin/layout.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2>Add Category</h2>
+    <form action="/addclr" method="post" id="add-category-form">
+                  
+                        <div class="form-group">
+                            <label for="cname">color Name:</label>
+                            <input type="text" id="cname" name="cname" required class="form-control w-50">
+                        </div>
+                        <div class="form-group  ">
+                            <button type="submit" class="btn btn-btn btn-primary ">Add Color</button> &nbsp;
+                            <a href="/color" class="btn btn-danger">cancel</a>
+                        </div>
+                    </form>
+                </div>
+            
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'admin/layout.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2>Add User</h2>
+    <form action="/adduser" method="post" id="add-user-form">
+                  
+                        <div class="form-group">
+                            <label for="uname">User Name:</label>
+                            <input type="text" id="uname" name="uname" required class="form-control w-50">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">User mail:</label>
+                            <input type="email" id="email" name="email" required class="form-control w-50">
+                        </div>
+                        <div class="form-group">
+                            <label for="psw">Password:</label>
+                            <input type="password" id="psw" name="psw" required class="form-control w-50">
+                        </div>
+                        <div class="form-group  ">
+                            <button type="submit" class="btn btn-btn btn-primary ">Add User</button> &nbsp;
+                            <a href="/user" class="btn btn-danger">cancel</a>
+                        </div>
+                    </form>
+                </div>
+            
+{% endblock %}

@@ -1,0 +1,143 @@
+{% extends 'index.html' %}
+{% block bodycontent %}
+<div style=" margin-top: 100px;">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Custom CSS styles */
+        .order-history-container {
+            background-color: #f2f2f2;
+            font-family: 'Roboto', sans-serif;
+            padding-top: 20px;
+        }
+        .order-history-card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .customer-details-card {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .order-section {
+            background-color: #ffffff;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .order-caption {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            background-color: #333333;
+            padding: 10px;
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            color: #ffffff;
+        }
+        .total-price {
+            font-weight: bold;
+            font-size: 20px;
+            background-color: #333333;
+            padding: 10px;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            color: #ffffff;
+            margin-top: 20px;
+        }
+        .order-details {
+            margin-bottom: 20px;
+        }
+        .order-details span {
+            font-weight: bold;
+            color: #1a237e;
+        }
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .product {
+            border: 2px solid #616161;
+            border-radius: 10px;
+            padding: 10px;
+            width: 200px;
+        }
+        .product-image {
+            max-height: 100px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .product-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #1a237e;
+        }
+        .product-quantity {
+            margin-bottom: 5px;
+            color: #424242;
+        }
+    </style>
+</head>
+<body>
+    <div class="order-history-container">
+        <div class="container">
+            <div class="customer-details-card">
+                <h2 class="text-center mb-3" style="color: #1565c0;">Customer Details</h2>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <div><strong>Name:</strong> {{current_user.name}}</div>
+                        <div><strong>Email:</strong> {{current_user.email}}</div>
+                        <!-- <div><strong>Mobile No:</strong> 1234567890</div> -->
+            <a class="btn btn-dark mr-2" href="/">Back</a>
+
+                    </div>
+                </div>
+            </div>
+           
+           
+            {% for order in orders %}
+            <div class="order-section">
+                <div class="order-caption">Order ID: <span>{{ order.ord_id }}</span> | Date: <span>{{ order.ord_date }}</span></div>
+                <div class="product-list">
+                {% set price_list = [] %}
+
+                    {% for item in order.order_details %}
+                    <div class="product">
+                        {% if item.product.image1 %}
+                        {% set full_path = item.product.image1 %}
+                        {% set filename = full_path.split("/")[-1] %}
+                        {% endif %}
+                        <img src="{{url_for('static',filename='assets/images/'+filename)}}" alt="no image found_error" class="product-image">
+                        <div class="product-name">{{ item.product.pname }}</div>
+                        <div class="product-quantity">Quantity: {{ item.quantity }}</div>
+                        <div class="product-price">Price: {{ item.product.price}}₹</div>
+
+                    </div>
+                    {% set total_cart_price =(item.product.price * item.quantity) %}
+                    {% set _ = price_list.append(total_cart_price) %} 
+                    {% endfor %}
+                </div>
+            {% set total_bill_amount = price_list | sum %}
+
+                <div class="total-price">Total Bill: {{total_bill_amount }} ₹</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>
+</div>
+{% endblock  %}

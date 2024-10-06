@@ -1,0 +1,84 @@
+{% extends 'index.html' %}
+{% block bodycontent %}
+<style>
+    .quantity {
+        display: flex;
+        align-items:normal; /* Align items vertically */
+    }
+    .quantity input {
+        width: 60px; /* Adjust width as needed */
+        margin: 0 5px; /* Add space between input field and buttons */
+    }
+   
+</style>
+
+<div class="container mt-5">
+    <div class="container ">
+        <h1 class="mb-4  text-center" style="margin-top: 100px;">Shopping Cart</h1>
+        <h5 >
+            All product prices are inclusive of GST..</h5>
+            <hr>
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Image</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Unit Price</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Use a loop to generate rows for each item in the cart -->
+                <!-- Sample row -->
+                {% set price_list = [] %}
+                {% for cart in cart %}
+                <tr>
+                    <td>
+                        {% set full_path = cart.product.image1  %}
+                        {% set filename = full_path.split("/")[-1] %}
+                      <img src="{{url_for('static',filename='assets/images/'+filename)}}" alt="Product Image" style="max-width: 80px;"></td>
+                    <td>{{ cart.product.pname }}</td>
+                    <td style="width:max-content; height: fit-content;"> 
+                        <!-- {{ cart.quantity }} -->
+                        <div class="quantity " ></div>
+                        <button type="button" onclick="updateQuantity('{{ cart.id }}', -1)">-</button>
+                        <input type="number" id="quantity-{{ cart.id }}" value="{{ cart.quantity }}" min="1" max="{{ cart.product.stock}}" class="form-control" readonly>
+                       
+                    <button onclick="updateQuantity('{{ cart.id }}', 1)">+</button> </div>                   
+                    </td>
+                       
+                    <td id="unit-price-{{ cart.id }}">{{ cart.product.price }}₹</td>
+                    <!-- unit price above -->
+                    <td id="total-price-{{ cart.id }}" class="total-price">{{ cart.product.price * cart.quantity }}₹</td>
+                    <!-- total price for each product calculated according quntity -->
+                    {% set total_cart_price =(cart.product.price * cart.quantity) %}
+                    {% set _ = price_list.append(total_cart_price) %}  
+                  
+                  <td>  <a href="/del_cart/{{cart.id}}" class="btn btn-outline-danger btn-sm" >Remove</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                <!-- End of sample row -->
+            </tbody>
+        </table>
+        <div class="text-right">
+            
+            {% set total_bill_amount = price_list | sum %}
+
+            <p>Total Price:<span id="total-bill-amount" value="">{{ total_bill_amount }}</span> ₹</p>
+
+           
+            <a class="btn btn-dark mr-2" href="/">Back</a>
+            {% if cart %}
+            <a href="/order_info" class="btn btn-primary"> Proceed to Checkout</a>
+               {%else%}
+            <a href="#" class="btn btn-primary"> Proceed to Checkout</a>
+
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock  %}

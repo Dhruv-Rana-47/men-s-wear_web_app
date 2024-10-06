@@ -1,0 +1,76 @@
+{% extends 'admin/layout.html' %}
+
+{% block body %}
+<form action="#" method="post"><div class="container-fluid mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-0">
+
+            <div class="row mb-2">
+                <div class="col-md-6">
+                    <h2>Order Details Table</h2>
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                    {% for category, message in messages %}
+                            <ul class="alert alert-success flashes ms-3 me-3 w-75  overflow-auto">
+                                {{ message }}
+                                <button type="button" class="close" onclick="dismissFlashMessage(this)">
+                                    <span aria-hidden="true">&times;</span></button></ul>
+                   {% endfor %}
+                    {% endif %}
+                {% endwith %}               
+                </div>
+            </div>
+            
+    <!-- order_id = db.Column(db.Integer, primary_key=True)
+    customer_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    shipping_address = db.Column(db.String(255), nullable=False)
+    ord_date = db.Column(db.Date, nullable=False)
+    order_status = db.Column(db.String(50), nullable=False) -->
+
+            <table class="table table-bordered ">
+                <thead class="thead-dark">
+                    <tr>
+                        <!-- <th class="py-2 px-3 border-right " style="width: 10%;">Select</th> -->
+                        <th class="py-2 px-3 border-right" style="width: 20%;">Id</th>
+                        <th class="py-2 px-3 border-right" style="width: 40%;">order_id</th>
+                        <th class="py-2 px-3 border-right" style="width: 40%;">pro_id</th>
+                        <th class="py-2 px-3 border-right" style="width: 40%;">Quantity</th>
+                        <th class="py-2 px-3 border-right" style="width: 40%;">unit_price</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for ord in order_det %}
+                    <tr class="text-dark table-dark " >
+                        <!-- <td class="p-0 text-center" style="width: 10%;"><input type="checkbox" class="categoryCheckbox m-auto" name="selected_order_det[]" value="{{ ord.id }}"></td> -->
+                        <td class="p-1 " style="width: 40%;"><b>{{ ord.id }}</b></td>
+                        <td class="p-1" style="width: 40%;"><b>{{ ord.ord_id }}</b></td>
+                        <td class="p-1" style="width: 40%;"><b>{{ord.product_id}}</b></td>
+                        <td class="p-1" style="width: 40%;"><b>{{ord.quantity}}</b></td>
+                        <td class="p-1" style="width: 40%;"><b>{{ord.product.price}}</b></td>
+                        
+                    </tr>
+                    <tr class="bg-dark">
+                        <td colspan="6" class="border-top-0 " style="padding:1px;"></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>     
+        </div>
+    </div>
+</div>
+</form>
+
+
+<!-- Bootstrap JS (Optional, if you need JavaScript features from Bootstrap) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+                    function dismissFlashMessage(button) {
+                        button.parentNode.style.display = 'none';
+                    }
+                </script> 
+
+{% endblock %}

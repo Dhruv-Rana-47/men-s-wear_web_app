@@ -1,0 +1,19 @@
+{% extends 'admin/layout.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2>Add Category</h2>
+    <form action="/addcat" method="post" id="add-category-form">
+                  
+                        <div class="form-group">
+                            <label for="category-name">Category Name:</label>
+                            <input type="text" id="category-name" name="cname" required class="form-control w-50">
+                        </div>
+                        <div class="form-group  ">
+                            <button type="submit" class="btn btn-btn btn-primary ">Add Category</button> &nbsp;
+                            <a href="/category" class="btn btn-danger">cancel</a>
+                        </div>
+                    </form>
+                </div>
+            
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends 'admin/layout.html' %}    
+{% block body %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Password</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .pwd-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        .pwd-heading {
+            color: #333333;
+            text-align: center;
+        }
+
+        .pwd-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #dcdcdc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .pwd-button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .pwd-primary-btn {
+            background-color: #333333;
+            color: #ffffff;
+        }
+
+        .pwd-secondary-btn {
+            background-color: #dcdcdc;
+            color: #333333;
+        }
+
+        .pwd-link {
+            color: #333333;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .pwd-message {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .pwd-error {
+            color: #ff0000;
+        }
+
+        .pwd-success {
+            color: #008000;
+        }
+    </style>
+</head>
+<body>
+    <div class="pwd-container">
+        <h2 class="pwd-heading">Change Password</h2>
+        <form action="/ch_pwd" method="POST">
+            <input type="password" name="current_password" class="pwd-input" placeholder="Current Password" required>
+            <input type="password" name="new_password" class="pwd-input" placeholder="New Password" required>
+            <input type="password" name="confirm_password" class="pwd-input" placeholder="Confirm Password" required>
+            <button type="submit" class="pwd-button pwd-primary-btn">Change Password</button>
+        </form>
+        <a href="/myadmin" class="pwd-link">Cancel</a>
+        <div class="pwd-message">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+
+    <ul class="alert alert-success flashes ms-3 me-3 w-75  overflow-auto">
+         {% for category, message in messages %}
+            <li class="{{ category }} "><b>{{ message }}</b></li>
+         {% endfor %}
+        </ul> 
+    {% endif %}
+{% endwith %}
+        </div>
+    </div>
+</body>
+</html>
+{% endblock  %}

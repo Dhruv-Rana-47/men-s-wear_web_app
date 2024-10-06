@@ -1,0 +1,19 @@
+{% extends 'admin/layout.html' %}
+
+{% block body %}
+<div class="container mt-5">
+    <h2>Add Category</h2>
+    <form action="/addsize" method="post" id="add-category-form">
+                  
+                        <div class="form-group">
+                            <label for="sname">Size Name:</label>
+                            <input type="text" id="sname" name="sname" required class="form-control w-50">
+                        </div>
+                        <div class="form-group  ">
+                            <button type="submit" class="btn btn-btn btn-primary ">Add size</button> &nbsp;
+                            <a href="/size" class="btn btn-danger">cancel</a>
+                        </div>
+                    </form>
+                </div>
+            
+{% endblock %}

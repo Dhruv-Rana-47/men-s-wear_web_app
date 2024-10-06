@@ -1,0 +1,57 @@
+{% extends 'index.html' %} 
+{% block bodycontent %}
+
+<img class="banner w-100  " style="height:fit-content;" src="{{url_for('static',filename='assets/images/banner222.jpg')}}" alt="Banner Image">
+{% for sub in subcat %}
+    
+<section class="section" id="men" >
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-6">
+              <div class="section-heading">
+                  <h2>{{ sub.sub_name }}</h2> 
+                  <span>“Looking good isn't self-importance; it's self-respect.”</span>
+          <!-- <a href="/products/{{sub.sub_id}}" class="btn btn-primary  mb-2">see-all</a> -->
+        </div>   
+          </div>
+      </div>
+  </div>
+  <div class="container">
+      <div class="row">
+          <div class="col-lg-12">
+              <div class="men-item-carousel">
+                  <div class="owl-men-item owl-carousel">
+                    {% for product in sub.products  %}
+                        
+                      <div class="item">
+                          <div class="thumb">
+                              <div class="hover-content">
+                                  <ul>
+                                      <li><a href="/one_pro/{{product.pid}}"><i class="fa fa-eye"></i></a></li>
+                                      <!-- <li><a href="/one_pro/{{product.pid}}"><i class="fa fa-star"></i></a></li> -->
+                                      <li><a href="/addcart/{{product.pid}}"><i class="fa fa-shopping-cart"></i></a></li>
+                                  </ul>
+                              </div>
+                              {% set full_path = product.image1 %}
+                              {% set filename = full_path.split("/")[-1] %}
+      
+                              <img src="{{ url_for('static', filename='assets/images/' + filename) }}" alt="">
+                              <!-- <img src="{{ url_for('static', filename='assets/images/mm3.jpg') }}" alt=""> -->
+                          </div>
+                          <div class="down-content">
+                              <h4><center>{{product.pname}}</center></h4>
+                             
+                           
+                          </div>
+                      </div>
+                      {% endfor %}
+
+                      
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+{% endfor %}
+{% endblock  %}
